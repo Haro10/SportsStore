@@ -1,0 +1,60 @@
+﻿@model SportsStore.Domain.Product
+
+@{
+    ViewBag.Title = "Admin: Edit " + @Model.Name;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<h1>Edit @Model.Name</h1>
+
+@*Let’s be honest—the EditorForModel method is convenient, but it does not produce the most
+attractive results. In addition, we do not want the administrator to be able to see or edit the ProductID
+attribute, and the text box for the Description property is far too small*@
+
+@*@using (Html.BeginForm())*@
+@*{*@
+@*    @Html.EditorForModel()*@
+@*    <input type="submit" value="Save"/>*@
+@*    @Html.ActionLink("Cancel and return to List", "Index")*@
+@*}*@
+
+@*  We would usually expect a form to postback to the action that
+    rendered it, and this is what the Html.BeginForm assumes by default when it generates an HTML form.
+    However, this does not work for our Create method, because we want the form to be posted back to the
+     Edit action so that we can save the newly created product data. To fix this, we can use an overloaded
+     version of the Html.BeginForm helper method to specify that the target of the form generated in the Edit
+     view is the Edit action method of the Admin controller
+
+     => We changed @Html.EditorForModel() above to (Html.BeginForm("Edit", "Admin"))
+*@
+
+
+@* - { enctype = "multipart/form-data" } You may already be aware that Web browsers will upload files properly only when
+        the HTML form element defines an enctype value of multipart/form-data.
+
+    - Without the enctype attribute, the browser will transmit only the name of the file and not its content,
+            which is no use to us at all.
+
+    - To ensure that the enctype attribute appears, we must use an overload of the
+        Html.BeginForm helper method that lets us specify HTML attributes - Page 295
+*@
+<h1>Edit @Model.Name</h1>
+@using (Html.BeginForm("Edit", "Admin",
+FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.EditorForModel()
+    <div class="editor-label">Image</div>
+    <div class="editor-field">
+        @if (Model.ImageData == null)
+        {
+            @:None
+}
+        else
+        {
+            <img width="150" height="150"
+                 src="@Url.Action("GetImage", "Product", new { Model.ProductID })" />
+        }
+        <div>Upload new image: <input type="file" name="Image" /></div>
+    </div>
+    <input type="submit" value="Save" />
+    @Html.ActionLink("Cancel and return to List", "Index")
+}

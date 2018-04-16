@@ -1,18 +1,15 @@
-﻿@model SportsStore.WebUI.Models.ProductsListViewModel
+﻿@using SportsStore.WebUI.HtmlHelpers
+@model SportsStore.WebUI.Models.ProductsListViewModel
 
 @{
     ViewBag.Title = "Products";
 }
+
 @foreach (var p in Model.Products)
 {
-    /*returns an HTML fragment */
-    @Html.Partial("ProductSummary", p)
-    
-    /* Html.RenderPartial writes content directly to the response stream, which is why we must call it like a complete line of C#, using a
-semicolon*/
-   /* Html.RenderPartial("ProductSummary", p);*/
-    
+  Html.RenderPartial("ProductSummary", p);
 }
 <div class="pager">
-    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x }))
-</div>
+   @Html.PageLinks(Model.PagingInfo, x => Url.Action("List",
+new { page = x, category = Model.CurrentCategory }))
+</div>  

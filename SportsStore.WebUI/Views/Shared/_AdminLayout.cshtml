@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <link href="~/Content/Admin.css" rel="stylesheet" type="text/css"/>
+    <script src="~/Scripts/jquery-1.8.2.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+<div>
+    @*The benefit of dealing with the message in the template like this is that users will see it displayed on
+    whatever page is rendered after they have saved a change. At the moment, we return them to the list of products,
+    but we could change the workflow to render some other view, and the users will still see the message (as long as
+    the next view also uses the same layout).*@
+    @if (TempData["message"] != null)
+    {
+        <div class="Message">@TempData["message"]</div>
+    }
+    @RenderBody()
+</div>
+</body>
+</html>

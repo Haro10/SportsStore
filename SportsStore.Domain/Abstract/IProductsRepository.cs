@@ -1,30 +1,15 @@
-﻿using System.CodeDom;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using SportsStore.Domain.Entities;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace SportsStore.Domain.Abstract
 {
-    public interface IProductsRepository
+    public interface IProductRepository
     {
         IQueryable<Product> Products { get; }
+        void SaveProduct(Product product);
+        Product DeleteProduct(int productID);
     }
-
-//    class MyClass2 : Interface1
-//    {
-//        public void Print()
-//        {
-//            
-//        }
-//    }
-//    class MyClass
-//    {
-//        
-//        Interface1 returnInteerface()
-//        {
-//            Interface1 inter = new MyClass2();
-//            inter.Print();
-//            return inter;
-//        }
-//    }
 }

@@ -1,0 +1,45 @@
+﻿@model SportsStore.Domain.ShippingDetails
+
+@{
+ViewBag.Title = "SportStore: Checkout";
+}
+
+<h2>Check out now</h2>
+Please enter your details, and we'll ship your goods right away!
+
+    
+@* Html.EditorFor helper method. This is an example of a templated helper method.
+       We let the MVC Framework work out what kindof input element a view model property requires,
+         instead of specifying it explicitly (by using Html.TextBoxFor, for example).
+        =>the MVC Framework is smart enough to render a checkbox for bool properties (such as the gift wrap
+    option) and text boxes for the string properties.
+*@
+
+
+@* We could go further and replace most of the markup in the view with a single call to the
+    Html.EditorForModel helper method, which would generate the labels and inputs for all the properties in the
+    ShippingDetails view model class. However, we wanted to separate the elements so that the name, address, and
+    options appear in different regions of the form, so it is simple to refer to each property directly.*@
+
+@using (Html.BeginForm())
+{
+     @Html.ValidationSummary()
+    <h3>Ship to</h3>
+    <div>Name: @Html.EditorFor(x => x.Name)</div>
+    <h3>Address</h3>
+    <div>Line 1: @Html.EditorFor(x => x.Line1)</div>
+    <div> Line 2: @Html.EditorFor(x => x.Line2)</div>
+    <div>Line 3: @Html.EditorFor(x => x.Line3)</div>
+    <div>City: @Html.EditorFor(x => x.City)</div>
+    <div>State: @Html.EditorFor(x => x.State)</div>
+    <div>Zip: @Html.EditorFor(x => x.Zip)</div>
+    <div>Country: @Html.EditorFor(x => x.Country)</div>
+    <h3>Options</h3>
+    <label>
+        @Html.EditorFor(x => x.GiftWrap)
+        Gift wrap these items
+    </label>
+    <p align="center">
+        <input class="actionButtons" type="submit" value="Complete order"/>
+    </p>
+}
